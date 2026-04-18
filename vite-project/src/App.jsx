@@ -6,6 +6,8 @@ import Cliente from './assets/components/pages/Cliente.jsx'
 import Reserva from './assets/components/pages/Reserva.jsx'
 
 import Container from './assets/components/layout/Container.jsx'
+import Navbar from './assets/components/layout/Navbar.jsx'
+import Footer from './assets/components/layout/Footer.jsx'
 function App() {
   
 
@@ -13,14 +15,8 @@ function App() {
     <>
       
     <Router>
-      <div>
-        <Link to="/">Home</Link>
-        <Link to="/residencias">Residencias</Link>
-        <Link to="/quartos">Quartos</Link>
-        <Link to="/clientes">Cliente</Link>
-        <Link to="/reserva">Reserva</Link>
-
-      </div>
+      
+      <Navbar />
     
     <Container customClass="min-height">
       <Routes>
@@ -35,7 +31,7 @@ function App() {
   </Container>
 
   
-  <p>Footer</p>
+  <Footer />
     </Router>
 
       
