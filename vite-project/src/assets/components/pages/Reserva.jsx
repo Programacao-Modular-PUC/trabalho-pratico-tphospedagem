@@ -1,9 +1,9 @@
 function Reserva(){
     return(
         <div>
-            <p>aaaaaaaaaa
-                
-            </p>
+            <p>aaaaaaaaaa </p>
+
+           
         </div>
     )
 }

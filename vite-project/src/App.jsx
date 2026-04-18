@@ -4,6 +4,8 @@ import Residencias from './assets/components/pages/Residencias.jsx'
 import Quartos from './assets/components/pages/Quartos.jsx'
 import Cliente from './assets/components/pages/Cliente.jsx'
 import Reserva from './assets/components/pages/Reserva.jsx'
+
+import Container from './assets/components/layout/Container.jsx'
 function App() {
   
 
@@ -20,19 +22,23 @@ function App() {
 
       </div>
     
-
-    <Routes>
-      <Route path="/" element={<Home/>} />
-      <Route path="/residencias" element={<Residencias />} />
-      <Route path="/quartos" element={<Quartos />} />
-      <Route path="/clientes" element={<Cliente />} />
-      <Route path="/reserva" element={<Reserva />} />
-    
+    <Container customClass="min-height">
+      <Routes>
+      
+        <Route path="/" element={<Home/>} />
+        <Route path="/residencias" element={<Residencias />} />
+        <Route path="/quartos" element={<Quartos />} />
+        <Route path="/clientes" element={<Cliente />} />
+        <Route path="/reserva" element={<Reserva />} />
     </Routes>
 
+  </Container>
+
   
+  <p>Footer</p>
     </Router>
 
+      
 
     </>
   )
