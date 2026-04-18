@@ -3,4 +3,8 @@
     color: #FFF;
     padding: 3em;
     text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
