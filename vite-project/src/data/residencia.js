@@ -1,0 +1,26 @@
+const residencias = [
+  {
+    id: 1,
+    imagem: "/imagens/casa1.jpg",
+    endereco: "Rua das Flores, 123",
+    bairro: "Centro",
+    telefone: "(31) 98395-9523"
+  },
+  {
+    id: 2,
+    imagem: "/imagens/casa1.jpg",
+    endereco: "Rua das Alamedas, 845",
+    bairro: "Barreiro",
+    telefone: "(31) 95439-3659"
+  },
+  {
+    id: 3,
+    imagem: "/imagens/casa1.jpg",
+    endereco: "Rua das Lindas, 23",
+    bairro: "Industrial",
+    telefone: "(31) 99485-89734"
+  },
+];
+
+
+export default residencias;
