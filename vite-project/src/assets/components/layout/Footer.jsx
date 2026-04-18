@@ -3,9 +3,9 @@ import styles from './Footer.module.css'
 function Footer(){
 
     return (
-        <Footer>
-            <p><span>Hospedagem</span> &copy; </p>
-        </Footer>
+        <footer className={styles.footer}>
+            <p><span>Hospedagem</span> &copy; 2026</p>
+        </footer>
     )
 }
 
