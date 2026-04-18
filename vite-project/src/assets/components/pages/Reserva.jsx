@@ -1,8 +1,10 @@
-function Reserva (){
-    return (
-        <>
-        <h1>Reserva</h1>
-        </>
+function Reserva(){
+    return(
+        <div>
+            <p>aaaaaaaaaa
+                
+            </p>
+        </div>
     )
 }
 

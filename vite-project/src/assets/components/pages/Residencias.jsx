@@ -1,7 +1,7 @@
-function Residencias (){
+function Residencias(){
     return (
         <>
-        <h1>Residencias</h1>
+        <p>Residencias</p>
         </>
     )
 }

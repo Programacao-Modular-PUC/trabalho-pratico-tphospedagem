@@ -1,7 +1,7 @@
-function Quartos (){
-    return (
+function Quartos(){
+    return(
         <>
-        <h1>Quartos</h1>
+        <p>Quartos</p>
         </>
     )
 }

@@ -1,7 +1,7 @@
-function Cliente (){
-    return (
+function Cliente(){
+    return(
         <>
-        <h1>Cliente</h1>
+        <p>Cliente</p>
         </>
     )
 }

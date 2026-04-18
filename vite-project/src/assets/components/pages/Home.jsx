@@ -1,7 +1,7 @@
-function Home (){
-    return (
+function Home(){
+    return(
         <>
-        <h1>home</h1>
+        <p>Home</p>
         </>
     )
 }
