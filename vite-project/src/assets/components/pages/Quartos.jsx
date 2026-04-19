@@ -1,30 +1,34 @@
-import { useParams } from "react-router-dom";
-import quartos from '../../../data/quartos'
+import { useParams, Link } from "react-router-dom";
+import quartos from "../../../data/quartos";
 
 function Quartos() {
-
-  // pega o id da URL (ex: /quartos/1)
   const params = useParams();
   const id = Number(params.id);
+
+  const quartosFiltrados = quartos.filter(
+    (q) => q.residenciaId === id
+  );
 
   return (
     <div>
       <h2>Quartos da residência {id}</h2>
 
-      {quartos.map((q) => {
-        if (q.residenciaId === id) {
-          return (
-            <div key={q.id}>
-              <p>Tipo: {q.tipo}</p>
-              <p>Valor: {q.valor}</p>
-              <p>Ar: {q.ar ? "Sim" : "Não"}</p>
-              <p>Hidro: {q.hidro ? "Sim" : "Não"}</p>
-              <hr />
-            </div>
-          );
-        }
-      })}
-
+      {quartosFiltrados.length === 0 ? (
+        <p>Nenhum quarto encontrado.</p>
+      ) : (
+        quartosFiltrados.map((q) => (
+          <div key={q.id}>
+            <p>Tipo: {q.tipo}</p>
+            <p>Valor: R$ {q.valor}</p>
+            <p>Ar: {q.ar ? "Sim" : "Não"}</p>
+            <p>Hidro: {q.hidro ? "Sim" : "Não"}</p>
+            <Link to={`/reserva?quartoId=${q.id}`}>
+              <button>Reservar quarto</button>
+            </Link>
+            <hr />
+          </div>
+        ))
+      )}
     </div>
   );
 }
