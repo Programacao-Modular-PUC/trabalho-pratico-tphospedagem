@@ -4,6 +4,8 @@ import Residencias from './assets/components/pages/Residencias.jsx'
 import Quartos from './assets/components/pages/Quartos.jsx'
 import Cliente from './assets/components/pages/Cliente.jsx'
 import Reserva from './assets/components/pages/Reserva.jsx'
+import Login from './assets/components/pages/Login.jsx'
+import CriarCliente from './assets/components/pages/CriarCliente.jsx'
 
 import Container from './assets/components/layout/Container.jsx'
 import Navbar from './assets/components/layout/Navbar.jsx'
@@ -18,7 +20,7 @@ function App() {
       
       <Navbar />
     
-    <Container customClass="min-height">
+    <Container customClass="min_height">
       <Routes>
       
         <Route path="/" element={<Home/>} />
@@ -27,6 +29,8 @@ function App() {
         <Route path="/clientes" element={<Cliente />} />
         <Route path="/reserva" element={<Reserva />} />
         <Route path="/quartos/:id" element={<Quartos />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/criar-cliente" element={<CriarCliente />} />
     </Routes>
 
   </Container>
