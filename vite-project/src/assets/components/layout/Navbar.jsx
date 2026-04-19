@@ -23,7 +23,7 @@ function Navbar(){
                 <Link to="/quartos">Quartos</Link>
             </li>          
             <li className={styles.item}>
-                <Link to="/clientes">Cliente</Link>
+                <Link to="/login">Cliente</Link>
             </li>
             
         </ul>
