@@ -1,0 +1,36 @@
+.reserva-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.reserva-container h1 {
+  text-align: center;
+}
+
+.reserva-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reserva-form input,
+.reserva-form select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.reserva-form button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reserva-form button:hover {
+  background-color: #0056b3;
+}
