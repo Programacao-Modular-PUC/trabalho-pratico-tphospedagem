@@ -26,6 +26,7 @@ function App() {
         <Route path="/quartos" element={<Quartos />} />
         <Route path="/clientes" element={<Cliente />} />
         <Route path="/reserva" element={<Reserva />} />
+        <Route path="/quartos/:id" element={<Quartos />} />
     </Routes>
 
   </Container>
