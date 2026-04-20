@@ -36,4 +36,25 @@ Inicie o ambiente de desenvolvimento:
 
 **npm run dev**
 
+### 5. Protótipo: telas sem funcionalidade
+
+As telas de protótipo disponíveis em docs/prototipos são:
+
+#### Home
+![Tela Home](docs/prototipos/home.png)
+
+#### Login
+![Tela Login](docs/prototipos/login.png)
+
+#### Cadastro
+![Tela Cadastro](docs/prototipos/cadastro.png)
+
+#### Residências
+![Tela Residências](docs/prototipos/residencias.png)
+
+#### Quarto
+![Tela Quarto](docs/prototipos/quarto.png)
+
+#### Reserva
+![Tela Reserva](docs/prototipos/reserva.png)
 
