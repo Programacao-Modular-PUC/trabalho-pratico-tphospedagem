@@ -1,0 +1,201 @@
+.page {
+  min-height: 100vh;
+  background-color: #f4f5f7;
+  padding: 48px 24px 64px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.titulo {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 40px;
+  letter-spacing: -0.5px;
+}
+
+.lista {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  overflow: hidden;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.13);
+  transform: translateY(-2px);
+}
+
+.imagemWrapper {
+  flex: 0 0 260px;
+  min-height: 200px;
+}
+
+.imagem {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.info {
+  flex: 1;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nome {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+
+.detalhe {
+  font-size: 0.9rem;
+  color: #444;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.label {
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+.quartosBox {
+  margin-top: 12px;
+  background: #f9fafb;
+  border: 1px solid #e8eaed;
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.quartosLabel {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: #555;
+  margin: 0 0 10px;
+}
+
+.quartosList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.quartoItem {
+  font-size: 0.875rem;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.quartoNome {
+  font-weight: 600;
+}
+
+.quartoDivider {
+  color: #bbb;
+  font-size: 0.75rem;
+}
+
+.btnVerQuartos {
+  margin-top: 10px;
+  background: none;
+  border: none;
+  color: #2563eb;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+
+.btnVerQuartos:hover {
+  color: #1d4ed8;
+}
+
+.acoes {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 12px;
+  padding: 24px 28px;
+  border-left: 1px solid #f0f0f0;
+}
+
+.btn {
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+  border: none;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btnSaiba {
+  background-color: transparent;
+  color: #2563eb;
+  border: 2px solid #2563eb;
+}
+
+.btnSaiba:hover {
+  background-color: #eff6ff;
+}
+
+/* ── Responsividade ── */
+@media (max-width: 768px) {
+  .card {
+    flex-direction: column;
+  }
+
+  .imagemWrapper {
+    flex: 0 0 auto;
+    height: 200px;
+  }
+
+  .acoes {
+    flex-direction: row;
+    justify-content: flex-end;
+    border-left: none;
+    border-top: 1px solid #f0f0f0;
+    padding: 16px 20px;
+  }
+
+  .btn {
+    flex: 1;
+    text-align: center;
+  }
+}
