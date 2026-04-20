@@ -15,7 +15,6 @@ export default function Residencias() {
 
           return (
             <li key={res.id} className={styles.card}>
-              {/* Lado Esquerdo — Imagem */}
               <div className={styles.imagemWrapper}>
                 <img
                   src={res.imagem}
@@ -24,7 +23,6 @@ export default function Residencias() {
                 />
               </div>
 
-              {/* Centro — Informações + Quartos */}
               <div className={styles.info}>
                 <h2 className={styles.nome}>{res.nome}</h2>
 
@@ -46,7 +44,7 @@ export default function Residencias() {
                         <li key={q.id} className={styles.quartoItem}>
                           <span className={styles.quartoNome}>{q.tipo}</span>
                           <span className={styles.quartoDivider}>|</span>
-                          <span>R$ {Number(q.precoPorNoite).toFixed(2)}/noite</span>
+                          <span>R$ {Number(q.valor).toFixed(2)}/noite</span>
                           <span className={styles.quartoDivider}>|</span>
                           <span>{q.capacidade} Hóspede{q.capacidade !== 1 ? 's' : ''}</span>
                         </li>
@@ -57,13 +55,9 @@ export default function Residencias() {
                 )}
               </div>
 
-              {/* Lado Direito — Ações */}
               <div className={styles.acoes}>
                 <button className={`${styles.btn} ${styles.btnSaiba}`}>
                   Saiba Mais
-                </button>
-                <button className={`${styles.btn} ${styles.btnContato}`}>
-                  Entre em Contato
                 </button>
               </div>
             </li>
