@@ -38,7 +38,6 @@ Inicie o ambiente de desenvolvimento:
 
 ### 5. Protótipo: telas sem funcionalidade
 
-As telas de protótipo disponíveis em docs/prototipos são:
 
 #### Home
 ![Tela Home](docs/prototipos/home.png)
