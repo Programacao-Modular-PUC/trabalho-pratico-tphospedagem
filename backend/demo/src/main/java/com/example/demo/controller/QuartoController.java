@@ -1,38 +1,38 @@
 package com.example.demo.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
-import com.example.demo.service.ResidenciaService;
+import com.example.demo.service.QuartoService;
 import org.springframework.web.bind.annotation.GetMapping;
-import com.example.demo.model.Residencia;
 
+import com.example.demo.model.Quarto;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
+
 @RestController
-@RequestMapping("/residencias")
-public class ResidenciaController {
+@RequestMapping("/quartos")
+public class QuartoController {
+    
 
     @Autowired
-    private ResidenciaService service;
+    private QuartoService service;
 
     @GetMapping
-    public List<Residencia> listar(){
+    public List<Quarto> listar(){
         return service.listar();
     }
 
-
-    // converte o json para Residencia , salva no banco e retorna o objeto salvo
     @PostMapping
-    public Residencia salvarResidencia(@RequestBody Residencia r) {
-    
-        return service.salvar(r);
+    public Quarto salvarQuarto(@RequestBody Quarto q) {
+        return service.salvar(q);
     }
     
-
+    
 
 }
