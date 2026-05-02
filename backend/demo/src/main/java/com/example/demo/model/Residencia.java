@@ -1,14 +1,17 @@
 package com.example.demo.model;
 
-
+import lombok.Setter;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.Getter;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 
 
 
 @Entity // diz que isso vira uma tabela
+@Getter
+@Setter
 public class Residencia {
 
     @Id
@@ -22,5 +25,6 @@ public class Residencia {
     private String bairro;
     private String telefone;
     private String imagem;
+
     
 }

@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.model.Residencia;
 
 
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @RestController
 @RequestMapping("/residencias")
@@ -21,4 +24,15 @@ public class ResidenciaController {
     public List<Residencia> listar(){
         return service.listar();
     }
+
+
+    // converte o json para Residencia , salva no banco e retorna o objeto salvo
+    @PostMapping
+    public Residencia adicionarResidencia(@RequestBody Residencia r) {
+    
+        return service.salvar(r);
+    }
+    
+
+
 }
