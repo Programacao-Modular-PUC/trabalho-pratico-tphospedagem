@@ -7,13 +7,16 @@ import jakarta.persistence.GenerationType;
 import lombok.Getter;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Getter
 @Setter
 public class Quarto {
 
     
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
@@ -25,5 +28,6 @@ public class Quarto {
     private int capacidade;
     
     @ManyToOne  //muitos quartos pertencem a uma residencia
+    @JsonBackReference
     private Residencia residencia;
 }
