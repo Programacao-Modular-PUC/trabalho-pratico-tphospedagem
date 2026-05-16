@@ -24,6 +24,25 @@ const quartos = [
     permiteBerco: true, adicionalBerco: 25,
     ar: true, hidro: false
   },
+
+  // Residência 3 — Sol Nascente
+  {
+    id: 5, residenciaId: 3, tipo: "INDIVIDUAL",
+    numeroCamas: 3, valorBase: 90, adicionalPorCama: 35,
+    ar: true, hidro: false
+  },
+  {
+    id: 6, residenciaId: 3, tipo: "DUPLO",
+    tipoCama: "KING", valorBase: 250, adicionalConforto: 70,
+    permiteBerco: true, adicionalBerco: 30,
+    ar: true, hidro: true
+  },
+  {
+    id: 7, residenciaId: 3, tipo: "DUPLO",
+    tipoCama: "COMUM", valorBase: 160, adicionalConforto: 20,
+    permiteBerco: false, adicionalBerco: 0,
+    ar: false, hidro: false
+  },
 ];
 
 export default quartos;
