@@ -20,3 +20,21 @@ public class QuartoService {
     }
     
 }
+
+public double calcularDiaria(Quarto q, boolean solicitaBerco) {
+    double total = q.getValorBase();
+
+    if ("INDIVIDUAL".equalsIgnoreCase(q.getTipo())) {
+        int camas = q.getNumeroCamas() != null ? q.getNumeroCamas() : 1;
+        if (camas > 1) {
+            total += (camas - 1) * q.getAdicionalPorCama();
+        }
+    } else if ("DUPLO".equalsIgnoreCase(q.getTipo())) {
+        total += q.getAdicionalConforto() != null ? q.getAdicionalConforto() : 0;
+        if (solicitaBerco && q.isPermiteBerco()) {
+            total += q.getAdicionalBerco() != null ? q.getAdicionalBerco() : 0;
+        }
+    }
+
+    return total;
+}
