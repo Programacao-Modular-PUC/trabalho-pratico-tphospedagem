@@ -133,6 +133,7 @@
   text-decoration: underline;
   text-underline-offset: 3px;
   transition: color 0.15s;
+  display: inline-block;
 }
 
 .btnVerQuartos:hover {
@@ -159,6 +160,8 @@
   white-space: nowrap;
   transition: background-color 0.15s ease, transform 0.1s ease;
   border: none;
+  text-decoration: none;
+  text-align: center;
 }
 
 .btn:active {
