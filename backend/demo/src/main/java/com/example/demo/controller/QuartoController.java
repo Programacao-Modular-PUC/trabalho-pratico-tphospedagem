@@ -1,35 +1,45 @@
 package com.example.demo.controller;
 
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import com.example.demo.model.Quarto;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.demo.dto.QuartoRequestDTO;
+import com.example.demo.dto.QuartoResponseDTO;
 import com.example.demo.service.QuartoService;
+
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("/quartos")
-@CrossOrigin(origins = "*")
 public class QuartoController {
+    
+    private final QuartoService service;
 
-    @Autowired
-    private QuartoService service;
+    public QuartoController(QuartoService service) {
+        this.service = service;
+    }
 
     @GetMapping
-    public List<Quarto> listar() {
+    public List<QuartoResponseDTO> listar(@RequestParam(required = false) Long residenciaId){
+        if (residenciaId != null) {
+            return service.listarPorResidencia(residenciaId);
+        }
+
         return service.listar();
     }
 
     @PostMapping
-    public Quarto salvar(@RequestBody Quarto q) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public QuartoResponseDTO salvarQuarto(@Valid @RequestBody QuartoRequestDTO q) {
         return service.salvar(q);
-    }
-
-    @GetMapping("/diaria/{id}")
-    public double calcularDiaria(@PathVariable Long id,
-                                  @RequestParam(defaultValue = "false") boolean berco) {
-        Quarto q = service.listar().stream()
-                .filter(x -> x.getId().equals(id))
-                .findFirst().orElseThrow();
-        return service.calcularDiaria(q, berco);
     }
 }
