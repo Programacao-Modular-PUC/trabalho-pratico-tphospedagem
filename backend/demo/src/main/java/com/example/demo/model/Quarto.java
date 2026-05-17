@@ -1,70 +1,55 @@
 package com.example.demo.model;
+import java.math.BigDecimal;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.DiscriminatorColumn;
+import jakarta.persistence.DiscriminatorType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Table(name = "quarto")
-public class Quarto {
+@Getter
+@Setter
+@NoArgsConstructor
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_quarto", discriminatorType = DiscriminatorType.STRING)
+public abstract class Quarto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
 
-    private Long residenciaId;
+    private BigDecimal valorBase;
+    private boolean possuiAR;
+    private boolean possuiHidro;
+    private int capacidadeMaxima;
+    
+    @ManyToOne
+    @JsonIgnoreProperties("quartos")
+    private Residencia residencia;
 
-    // "INDIVIDUAL" ou "DUPLO"
-    private String tipo;
+    public abstract BigDecimal calcularValorDiaria(int quantidadeHospedes);
 
-    private boolean ar;
-    private boolean hidro;
+    protected BigDecimal calcularAdicionaisConforto() {
+        BigDecimal adicional = BigDecimal.ZERO;
 
-    // --- Quarto Individual ---
-    private Integer numeroCamas; // 1 ou mais camas de solteiro
-    private Double valorBase;
-    private Double adicionalPorCama;
+        if (possuiAR) {
+            adicional = adicional.add(new BigDecimal("20.00"));
+        }
 
-    // --- Quarto Duplo ---
-    // "COMUM", "QUEEN" ou "KING"
-    private String tipoCama;
-    private boolean permiteBerco;
-    private Double adicionalBerco;
-    private Double adicionalConforto; // adicional por tipo de cama (queen/king)
+        if (possuiHidro) {
+            adicional = adicional.add(new BigDecimal("30.00"));
+        }
 
-    // Getters e Setters
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public Long getResidenciaId() { return residenciaId; }
-    public void setResidenciaId(Long residenciaId) { this.residenciaId = residenciaId; }
-
-    public String getTipo() { return tipo; }
-    public void setTipo(String tipo) { this.tipo = tipo; }
-
-    public boolean isAr() { return ar; }
-    public void setAr(boolean ar) { this.ar = ar; }
-
-    public boolean isHidro() { return hidro; }
-    public void setHidro(boolean hidro) { this.hidro = hidro; }
-
-    public Integer getNumeroCamas() { return numeroCamas; }
-    public void setNumeroCamas(Integer numeroCamas) { this.numeroCamas = numeroCamas; }
-
-    public Double getValorBase() { return valorBase; }
-    public void setValorBase(Double valorBase) { this.valorBase = valorBase; }
-
-    public Double getAdicionalPorCama() { return adicionalPorCama; }
-    public void setAdicionalPorCama(Double adicionalPorCama) { this.adicionalPorCama = adicionalPorCama; }
-
-    public String getTipoCama() { return tipoCama; }
-    public void setTipoCama(String tipoCama) { this.tipoCama = tipoCama; }
-
-    public boolean isPermiteBerco() { return permiteBerco; }
-    public void setPermiteBerco(boolean permiteBerco) { this.permiteBerco = permiteBerco; }
-
-    public Double getAdicionalBerco() { return adicionalBerco; }
-    public void setAdicionalBerco(Double adicionalBerco) { this.adicionalBerco = adicionalBerco; }
-
-    public Double getAdicionalConforto() { return adicionalConforto; }
-    public void setAdicionalConforto(Double adicionalConforto) { this.adicionalConforto = adicionalConforto; }
+        return adicional;
+    }
 }
