@@ -1,17 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import styles from './Residencias.module.css';
-import casa1 from '../assets/images/casa1.jpg';
-import casa2 from '../assets/images/casa2.jpg';
-import casa3 from '../assets/images/casa3.jpg';
+import casa1 from '../img/casa1.jpg';
+import casa2 from '../img/casa2.jpg';
+import casa3 from '../img/casa3.jpg';
 
 export default function Residencias() {
   const imagensFallback = [casa1, casa2, casa3];
-  const imagemPorResidencia = {
-    'Residência Bela Vista': casa1,
-    'Residência Jardim dos Sonhos': casa2,
-    'Residência Sol Nascente': casa3,
-  };
   const [residencias, setResidencias] = useState([]);
   const [quartos, setQuartos] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,8 +19,8 @@ export default function Residencias() {
         setErro('');
 
         const [resResidencias, resQuartos] = await Promise.all([
-          fetch('/residencias'),
-          fetch('/quartos'),
+          fetch('http://localhost:8080/residencias'),
+          fetch('http://localhost:8080/quartos'),
         ]);
 
         if (!resResidencias.ok || !resQuartos.ok) {
@@ -59,23 +54,14 @@ export default function Residencias() {
           const quartosResidencia = quartos.filter(
             (q) => q.residenciaId === res.id
           );
-          const imagemPadrao = imagemPorResidencia[res.nome] || imagensFallback[(res.id - 1) % imagensFallback.length];
-          const imagemPrincipal = imagemPadrao || res.imagem;
 
           return (
             <li key={res.id} className={styles.card}>
               <div className={styles.imagemWrapper}>
                 <img
-                  src={imagemPrincipal}
+                  src={res.imagem || imagensFallback[res.id % imagensFallback.length]}
                   alt={`Foto de ${res.nome}`}
                   className={styles.imagem}
-                  onError={(event) => {
-                    const fallback = res.imagem || imagemPadrao;
-
-                    if (event.currentTarget.src !== fallback) {
-                      event.currentTarget.src = fallback;
-                    }
-                  }}
                 />
               </div>
 

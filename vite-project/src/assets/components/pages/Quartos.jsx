@@ -1,51 +1,56 @@
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import quartos from "../../../data/quartos";
 
 function Quartos() {
   const params = useParams();
   const id = Number(params.id);
-  const quartosFiltrados = quartos.filter((q) => q.residenciaId === id);
+  const [quartos, setQuartos] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [erro, setErro] = useState("");
 
-  function calcularDiaria(q, comBerco = false) {
-    let total = q.valorBase;
-    if (q.tipo === "INDIVIDUAL") {
-      const camas = q.numeroCamas || 1;
-      if (camas > 1) total += (camas - 1) * q.adicionalPorCama;
-    } else if (q.tipo === "DUPLO") {
-      total += q.adicionalConforto || 0;
-      if (comBerco && q.permiteBerco) total += q.adicionalBerco || 0;
+  useEffect(() => {
+    async function carregarQuartos() {
+      try {
+        setLoading(true);
+        setErro("");
+
+        const response = await fetch(`http://localhost:8080/quartos?residenciaId=${id}`);
+
+        if (!response.ok) {
+          throw new Error("Não foi possível carregar os quartos desta residência.");
+        }
+
+        const data = await response.json();
+        setQuartos(data);
+      } catch (error) {
+        setErro(error.message || "Erro ao carregar quartos.");
+      } finally {
+        setLoading(false);
+      }
     }
-    return total;
-  }
+
+    if (!Number.isNaN(id)) {
+      carregarQuartos();
+    }
+  }, [id]);
 
   return (
     <div>
       <h2>Quartos da residência {id}</h2>
-      {quartosFiltrados.length === 0 ? (
+
+      {loading && <p>Carregando quartos...</p>}
+      {erro && <p>{erro}</p>}
+
+      {!loading && quartos.length === 0 ? (
         <p>Nenhum quarto encontrado.</p>
       ) : (
-        quartosFiltrados.map((q) => (
+        quartos.map((q) => (
           <div key={q.id}>
             <p>Tipo: {q.tipo}</p>
-            {q.tipo === "INDIVIDUAL" && (
-              <>
-                <p>Número de camas: {q.numeroCamas}</p>
-                <p>Capacidade: {q.numeroCamas} hóspede(s)</p>
-                <p>Diária: R$ {calcularDiaria(q).toFixed(2)}</p>
-              </>
-            )}
-            {q.tipo === "DUPLO" && (
-              <>
-                <p>Cama: {q.tipoCama}</p>
-                <p>Permite berço: {q.permiteBerco ? "Sim" : "Não"}</p>
-                <p>Diária sem berço: R$ {calcularDiaria(q, false).toFixed(2)}</p>
-                {q.permiteBerco && (
-                  <p>Diária com berço: R$ {calcularDiaria(q, true).toFixed(2)}</p>
-                )}
-              </>
-            )}
-            <p>Ar: {q.ar ? "Sim" : "Não"}</p>
-            <p>Hidro: {q.hidro ? "Sim" : "Não"}</p>
+            <p>Valor: R$ {Number(q.valorBase).toFixed(2)}</p>
+            <p>Capacidade: {q.capacidadeMaxima}</p>
+            <p>Ar: {q.possuiAR ? "Sim" : "Não"}</p>
+            <p>Hidro: {q.possuiHidro ? "Sim" : "Não"}</p>
             <Link to={`/reserva?quartoId=${q.id}`}>
               <button>Reservar quarto</button>
             </Link>
