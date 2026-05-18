@@ -1,5 +1,6 @@
 package com.example.demo.model;
 import java.math.BigDecimal;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -35,6 +36,8 @@ public class Aluguel {
     private LocalDateTime dataSaida;
 
     private int quantidadeDiarias;
+
+    @Column(precision = 10, scale = 2)
     private BigDecimal valorFinal;
 
     private String recibo;

@@ -3,6 +3,7 @@ import java.math.BigDecimal;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorColumn;
 import jakarta.persistence.DiscriminatorType;
 import jakarta.persistence.Entity;
@@ -28,6 +29,7 @@ public abstract class Quarto {
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
 
+    @Column(precision = 10, scale = 2)
     private BigDecimal valorBase;
     private boolean possuiAR;
     private boolean possuiHidro;

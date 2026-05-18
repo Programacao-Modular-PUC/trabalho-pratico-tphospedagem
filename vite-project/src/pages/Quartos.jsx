@@ -18,7 +18,7 @@ function Quartos() {
         setLoading(true);
         setErro("");
 
-        const endpoint = porResidencia ? `http://localhost:8080/quartos?residenciaId=${id}` : 'http://localhost:8080/quartos';
+        const endpoint = porResidencia ? `/api/quartos?residenciaId=${id}` : '/api/quartos';
         const response = await fetch(endpoint);
 
         if (!response.ok) {
@@ -30,7 +30,7 @@ function Quartos() {
 
         // Se for por residência, carrega também os dados da residência
         if (porResidencia) {
-          const resRes = await fetch(`http://localhost:8080/residencias/${id}`);
+          const resRes = await fetch(`/api/residencias/${id}`);
           if (resRes.ok) {
             const resData = await resRes.json();
             setResidencia(resData);

@@ -28,8 +28,8 @@ function Reserva() {
         setError('')
 
         const [clientesRes, quartosRes] = await Promise.all([
-          fetch('http://localhost:8080/clientes'),
-          fetch('http://localhost:8080/quartos'),
+          fetch('/api/clientes'),
+          fetch('/api/quartos'),
         ])
 
         if (!clientesRes.ok) {
@@ -96,7 +96,7 @@ function Reserva() {
         quantidadeHospedes: Number(form.quantidadeHospedes),
       }
 
-      const response = await fetch('http://localhost:8080/alugueis', {
+      const response = await fetch('/api/alugueis', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -16,7 +17,11 @@ import lombok.Setter;
 public class QuartoFamilia extends Quarto {
 
     private int quantidadeAmbientes;
+
+    @Column(precision = 10, scale = 2)
     private BigDecimal valorPorHospedeAdicional;
+
+    @Column(precision = 10, scale = 2)
     private BigDecimal percentualDescontoGrupo;
 
     @Override

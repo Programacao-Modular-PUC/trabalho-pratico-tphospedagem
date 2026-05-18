@@ -24,8 +24,8 @@ export default function Residencias() {
         setErro('');
 
         const [resResidencias, resQuartos] = await Promise.all([
-          fetch('http://localhost:8080/residencias'),
-          fetch('http://localhost:8080/quartos'),
+          fetch('/api/residencias'),
+          fetch('/api/quartos'),
         ]);
 
         if (!resResidencias.ok || !resQuartos.ok) {

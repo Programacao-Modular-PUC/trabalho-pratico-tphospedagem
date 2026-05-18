@@ -105,14 +105,16 @@ Todos os quartos possuem:
 
 ### 4.3 Tipos de quarto
 
-Por padrão, o backend sobe com H2 em memória para permitir execução local sem MySQL instalado.
+Por padrão, o backend sobe com MySQL usando o profile `mysql`.
 
-Para usar MySQL, ative o perfil `mysql` e garanta que o banco `tp_hospedagem` esteja disponível.
+Para subir o banco localmente, use o Docker Compose do backend e depois inicie a API.
 
 Exemplo:
 
 ```bash
-./mvnw spring-boot:run -Dspring-boot.run.profiles=mysql
+cd backend/demo
+docker compose up -d
+./mvnw spring-boot:run
 ```
 
 
@@ -257,14 +259,14 @@ A API retorna erros padronizados com esta estrutura:
 ## 7. Banco de dados
 
 ### 7.1 Ambiente principal
-O arquivo `src/main/resources/application.properties` está configurado para MySQL:
+O arquivo `src/main/resources/application.properties` ativa o profile `mysql` por padrão:
 
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/tp_hospedagem?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
-spring.datasource.username=root
-spring.datasource.password=root
-spring.jpa.hibernate.ddl-auto=update
+spring.application.name=demo
+spring.profiles.active=mysql
 ```
+
+A conexão principal fica em `src/main/resources/application-mysql.properties`.
 
 ### 7.2 Ambiente de testes
 Os testes usam H2 em memória com o perfil `test`.
@@ -278,13 +280,14 @@ Arquivo:
 - Java 17
 - Maven Wrapper disponível no projeto
 - Node.js e npm (para o frontend)
-- MySQL em execução, se for rodar o backend principal
+- Docker e Docker Compose para subir o MySQL local
 
 ### 8.2 Rodar o projeto completo (Frontend + Backend)
 
 #### Passo 1: Inicie o Backend (em um terminal)
 ```bash
 cd backend/demo
+docker compose up -d
 ./mvnw spring-boot:run
 ```
 O backend estará disponível em: **http://localhost:8080**
