@@ -1,0 +1,76 @@
+.reserva-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.reserva-container h1 {
+  text-align: center;
+}
+
+.reserva-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.reserva-form input,
+.reserva-form select {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.reserva-form button {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reserva-form button:hover {
+  background-color: #0056b3;
+}
+
+.reserva-form button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.reserva-msg {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 0;
+}
+
+.reserva-msg.erro {
+  color: #b00020;
+}
+
+.reserva-msg.sucesso {
+  color: #0c7a38;
+}
+
+.reserva-recibo {
+  margin-top: 20px;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: #fff;
+}
+
+.reserva-recibo h2 {
+  margin-top: 0;
+  font-size: 1.1rem;
+}
+
+.reserva-recibo pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  background: #f8f9fa;
+  border-radius: 6px;
+  padding: 8px;
+}
