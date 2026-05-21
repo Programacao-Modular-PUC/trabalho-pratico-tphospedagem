@@ -1,6 +1,6 @@
-import casa1 from '../assets/components/img/casa1.jpg'
-import casa2 from '../assets/components/img/casa2.jpg'
-import casa3 from '../assets/components/img/casa3.jpg'
+import casa1 from '../assets/images/casa1.jpg'
+import casa2 from '../assets/images/casa2.jpg'
+import casa3 from '../assets/images/casa3.jpg'
 const residencias = [
   {
     id: 1,

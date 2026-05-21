@@ -20,10 +20,10 @@ function Navbar(){
                 <Link to="/residencias">Residencias</Link>
             </li>
             <li className={styles.item}>
-                <Link to="/quartos">Quartos</Link>
-            </li>          
-            <li className={styles.item}>
                 <Link to="/login">Cliente</Link>
+            </li>
+            <li className={styles.item}>
+                <Link to="/reserva">Reserva</Link>
             </li>
             
         </ul>

@@ -1,5 +1,5 @@
-import residencias from '../../../data/residencia'
-import CardResidencias from '../layout/CardResidencias.jsx'
+import residencias from '../data/residencia'
+import CardResidencias from '../components/layout/CardResidencias.jsx'
 import styles from './Home.module.css'
 function Home(){
 
