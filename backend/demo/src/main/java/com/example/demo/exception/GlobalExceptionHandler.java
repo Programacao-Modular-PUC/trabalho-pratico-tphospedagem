@@ -81,4 +81,21 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
+
+
+    @ExceptionHandler(QuartoIndisponivelException.class)
+public ResponseEntity<ApiErrorResponse> handleQuartoIndisponivel(
+    QuartoIndisponivelException ex,
+    HttpServletRequest request
+) {
+    ApiErrorResponse error = new ApiErrorResponse(
+        LocalDateTime.now(),
+        HttpStatus.CONFLICT.value(),
+        "Quarto Indisponível",
+        ex.getMessage(),
+        request.getRequestURI()
+    );
+
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+}
 }

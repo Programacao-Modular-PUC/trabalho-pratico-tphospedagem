@@ -19,6 +19,7 @@ import com.example.demo.model.Cliente;
 import com.example.demo.model.Quarto;
 import com.example.demo.model.enums.AluguelStatus;
 import com.example.demo.repository.AluguelRepository;
+import com.example.demo.exception.QuartoIndisponivelException;
 
 @Service
 public class AluguelService {
@@ -105,7 +106,7 @@ public class AluguelService {
         );
 
         if (ocupado) {
-            throw new BusinessRuleException("Quarto indisponível para o período informado");
+            throw new QuartoIndisponivelException(quartoId);
         }
     }
 
