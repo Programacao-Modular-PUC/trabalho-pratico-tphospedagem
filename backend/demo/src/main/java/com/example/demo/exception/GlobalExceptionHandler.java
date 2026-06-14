@@ -97,4 +97,20 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
+    @ExceptionHandler(CapacidadeExcedidaException.class)
+    public ResponseEntity<ApiErrorResponse> handleCapacidadeExcedida(
+        CapacidadeExcedidaException ex,
+        HttpServletRequest request
+    ) {
+        ApiErrorResponse error = new ApiErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Capacity Exceeded",
+            ex.getMessage(),
+            request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
 }

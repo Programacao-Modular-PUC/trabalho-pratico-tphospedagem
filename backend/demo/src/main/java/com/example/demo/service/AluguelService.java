@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.AluguelRequestDTO;
 import com.example.demo.dto.AluguelResponseDTO;
 import com.example.demo.exception.BusinessRuleException;
+import com.example.demo.exception.CapacidadeExcedidaException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.exception.DataInvalidaException;
 import com.example.demo.model.Aluguel;
@@ -93,7 +94,7 @@ public class AluguelService {
 
     private void validarCapacidade(Quarto quarto, int quantidadeHospedes) {
         if (quantidadeHospedes > quarto.getCapacidadeMaxima()) {
-            throw new BusinessRuleException("Quantidade de hóspedes excede a capacidade do quarto");
+            throw new CapacidadeExcedidaException(quarto.getCapacidadeMaxima(), quantidadeHospedes);
         }
     }
 
