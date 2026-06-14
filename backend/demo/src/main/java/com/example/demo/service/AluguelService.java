@@ -14,6 +14,7 @@ import com.example.demo.dto.AluguelRequestDTO;
 import com.example.demo.dto.AluguelResponseDTO;
 import com.example.demo.exception.BusinessRuleException;
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.exception.DataInvalidaException;
 import com.example.demo.model.Aluguel;
 import com.example.demo.model.Cliente;
 import com.example.demo.model.Quarto;
@@ -86,7 +87,7 @@ public class AluguelService {
 
     private void validarDatas(LocalDateTime dataEntrada, LocalDateTime dataSaida) {
         if (!dataSaida.isAfter(dataEntrada)) {
-            throw new BusinessRuleException("Data de saída deve ser maior que a data de entrada");
+            throw new DataInvalidaException("Data de saída deve ser maior que a data de entrada");
         }
     }
 
