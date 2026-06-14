@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.dto.QuartoRequestDTO;
 import com.example.demo.dto.QuartoResponseDTO;
 import com.example.demo.exception.BusinessRuleException;
+import com.example.demo.exception.RecursoNaoPermitidoException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Quarto;
 import com.example.demo.model.QuartoDuplo;
@@ -64,6 +65,8 @@ public class QuartoService {
             throw new BusinessRuleException("Quarto individual precisa ter ao menos 1 cama de solteiro");
         }
 
+        validarBercoPermitido(dto, "Quarto Individual");
+
         QuartoIndividual quarto = new QuartoIndividual();
         preencherCamposComuns(quarto, dto);
         quarto.setQuantidadeCamasSolteiro(dto.quantidadeCamasSolteiro());
@@ -96,6 +99,8 @@ public class QuartoService {
             throw new BusinessRuleException("Quarto família deve possuir pelo menos 1 ambiente");
         }
 
+        validarBercoPermitido(dto, "Quarto Família");
+
         QuartoFamilia quarto = new QuartoFamilia();
         preencherCamposComuns(quarto, dto);
         quarto.setQuantidadeAmbientes(dto.quantidadeAmbientes());
@@ -103,6 +108,12 @@ public class QuartoService {
         quarto.setPercentualDescontoGrupo(valueOrZero(dto.percentualDescontoGrupo()));
 
         return quarto;
+    }
+
+    private void validarBercoPermitido(QuartoRequestDTO dto, String tipoQuarto) {
+        if (dto.permiteBerco()) {
+            throw new RecursoNaoPermitidoException("Berço", tipoQuarto);
+        }
     }
 
     private void preencherCamposComuns(Quarto quarto, QuartoRequestDTO dto) {
