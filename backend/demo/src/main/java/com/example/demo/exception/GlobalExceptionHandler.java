@@ -8,16 +8,22 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.example.demo.logger.SystemLogger;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private final SystemLogger logger = SystemLogger.getInstance();
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiErrorResponse> handleResourceNotFound(
         ResourceNotFoundException ex,
         HttpServletRequest request
     ) {
+        logger.log("ERRO_NOT_FOUND", ex.getMessage() + " | URI: " + request.getRequestURI());
+
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
             HttpStatus.NOT_FOUND.value(),
@@ -25,7 +31,6 @@ public class GlobalExceptionHandler {
             ex.getMessage(),
             request.getRequestURI()
         );
-
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
@@ -34,6 +39,8 @@ public class GlobalExceptionHandler {
         BusinessRuleException ex,
         HttpServletRequest request
     ) {
+        logger.log("ERRO_REGRA_NEGOCIO", ex.getMessage() + " | URI: " + request.getRequestURI());
+
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
             HttpStatus.UNPROCESSABLE_ENTITY.value(),
@@ -41,7 +48,6 @@ public class GlobalExceptionHandler {
             ex.getMessage(),
             request.getRequestURI()
         );
-
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
     }
 
@@ -55,6 +61,8 @@ public class GlobalExceptionHandler {
             .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
             .orElse("Erro de validação");
 
+        logger.log("ERRO_VALIDACAO", message + " | URI: " + request.getRequestURI());
+
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
             HttpStatus.BAD_REQUEST.value(),
@@ -62,24 +70,7 @@ public class GlobalExceptionHandler {
             message,
             request.getRequestURI()
         );
-
         return ResponseEntity.badRequest().body(error);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiErrorResponse> handleGeneric(
-        Exception ex,
-        HttpServletRequest request
-    ) {
-        ApiErrorResponse error = new ApiErrorResponse(
-            LocalDateTime.now(),
-            HttpStatus.INTERNAL_SERVER_ERROR.value(),
-            "Internal Server Error",
-            ex.getMessage(),
-            request.getRequestURI()
-        );
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 
     @ExceptionHandler(DataInvalidaException.class)
@@ -87,6 +78,8 @@ public class GlobalExceptionHandler {
         DataInvalidaException ex,
         HttpServletRequest request
     ) {
+        logger.log("ERRO_DATA_INVALIDA", ex.getMessage() + " | URI: " + request.getRequestURI());
+
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
             HttpStatus.BAD_REQUEST.value(),
@@ -94,7 +87,6 @@ public class GlobalExceptionHandler {
             ex.getMessage(),
             request.getRequestURI()
         );
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
@@ -103,6 +95,8 @@ public class GlobalExceptionHandler {
         CapacidadeExcedidaException ex,
         HttpServletRequest request
     ) {
+        logger.log("ERRO_CAPACIDADE_EXCEDIDA", ex.getMessage() + " | URI: " + request.getRequestURI());
+
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
             HttpStatus.BAD_REQUEST.value(),
@@ -110,7 +104,6 @@ public class GlobalExceptionHandler {
             ex.getMessage(),
             request.getRequestURI()
         );
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
@@ -119,6 +112,8 @@ public class GlobalExceptionHandler {
         RecursoNaoPermitidoException ex,
         HttpServletRequest request
     ) {
+        logger.log("ERRO_RECURSO_NAO_PERMITIDO", ex.getMessage() + " | URI: " + request.getRequestURI());
+
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
             HttpStatus.BAD_REQUEST.value(),
@@ -126,7 +121,23 @@ public class GlobalExceptionHandler {
             ex.getMessage(),
             request.getRequestURI()
         );
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiErrorResponse> handleGeneric(
+        Exception ex,
+        HttpServletRequest request
+    ) {
+        logger.log("ERRO_INTERNO", ex.getMessage() + " | URI: " + request.getRequestURI());
+
+        ApiErrorResponse error = new ApiErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            "Internal Server Error",
+            ex.getMessage(),
+            request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
 }
