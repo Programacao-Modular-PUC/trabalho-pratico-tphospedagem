@@ -8,16 +8,22 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.example.demo.logger.SystemLogger;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
+    private final SystemLogger logger = SystemLogger.getInstance();
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ApiErrorResponse> handleResourceNotFound(
         ResourceNotFoundException ex,
         HttpServletRequest request
     ) {
+        logger.log("ERRO_NOT_FOUND", ex.getMessage() + " | URI: " + request.getRequestURI());
+
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
             HttpStatus.NOT_FOUND.value(),
@@ -25,7 +31,6 @@ public class GlobalExceptionHandler {
             ex.getMessage(),
             request.getRequestURI()
         );
-
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
@@ -34,6 +39,8 @@ public class GlobalExceptionHandler {
         BusinessRuleException ex,
         HttpServletRequest request
     ) {
+        logger.log("ERRO_REGRA_NEGOCIO", ex.getMessage() + " | URI: " + request.getRequestURI());
+
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
             HttpStatus.UNPROCESSABLE_ENTITY.value(),
@@ -41,7 +48,6 @@ public class GlobalExceptionHandler {
             ex.getMessage(),
             request.getRequestURI()
         );
-
         return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
     }
 
@@ -55,6 +61,8 @@ public class GlobalExceptionHandler {
             .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
             .orElse("Erro de validação");
 
+        logger.log("ERRO_VALIDACAO", message + " | URI: " + request.getRequestURI());
+
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
             HttpStatus.BAD_REQUEST.value(),
@@ -62,8 +70,24 @@ public class GlobalExceptionHandler {
             message,
             request.getRequestURI()
         );
-
         return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(QuartoIndisponivelException.class)
+    public ResponseEntity<ApiErrorResponse> handleQuartoIndisponivel(
+        QuartoIndisponivelException ex,
+        HttpServletRequest request
+    ) {
+        logger.log("ERRO_QUARTO_INDISPONIVEL", ex.getMessage() + " | URI: " + request.getRequestURI());
+
+        ApiErrorResponse error = new ApiErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.CONFLICT.value(),
+            "Quarto Indisponível",
+            ex.getMessage(),
+            request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
     @ExceptionHandler(Exception.class)
@@ -71,6 +95,8 @@ public class GlobalExceptionHandler {
         Exception ex,
         HttpServletRequest request
     ) {
+        logger.log("ERRO_INTERNO", ex.getMessage() + " | URI: " + request.getRequestURI());
+
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
             HttpStatus.INTERNAL_SERVER_ERROR.value(),
@@ -78,24 +104,6 @@ public class GlobalExceptionHandler {
             ex.getMessage(),
             request.getRequestURI()
         );
-
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
     }
-
-
-    @ExceptionHandler(QuartoIndisponivelException.class)
-public ResponseEntity<ApiErrorResponse> handleQuartoIndisponivel(
-    QuartoIndisponivelException ex,
-    HttpServletRequest request
-) {
-    ApiErrorResponse error = new ApiErrorResponse(
-        LocalDateTime.now(),
-        HttpStatus.CONFLICT.value(),
-        "Quarto Indisponível",
-        ex.getMessage(),
-        request.getRequestURI()
-    );
-
-    return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
-}
 }

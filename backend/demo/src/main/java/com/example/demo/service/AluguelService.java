@@ -14,6 +14,7 @@ import com.example.demo.dto.AluguelRequestDTO;
 import com.example.demo.dto.AluguelResponseDTO;
 import com.example.demo.exception.BusinessRuleException;
 import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.logger.SystemLogger;
 import com.example.demo.model.Aluguel;
 import com.example.demo.model.Cliente;
 import com.example.demo.model.Quarto;
@@ -30,6 +31,7 @@ public class AluguelService {
     private final ClienteService clienteService;
     private final QuartoService quartoService;
     private final Clock clock;
+    private final SystemLogger logger = SystemLogger.getInstance();
 
     public AluguelService(
         AluguelRepository repository,
@@ -43,7 +45,7 @@ public class AluguelService {
         this.clock = clock;
     }
 
-    public List<AluguelResponseDTO> listar(){
+    public List<AluguelResponseDTO> listar() {
         return repository.findAll().stream().map(this::toResponse).toList();
     }
 
@@ -51,7 +53,7 @@ public class AluguelService {
         return repository.findByClienteId(clienteId).stream().map(this::toResponse).toList();
     }
 
-    public AluguelResponseDTO salvar(AluguelRequestDTO dto ){
+    public AluguelResponseDTO salvar(AluguelRequestDTO dto) {
         validarDatas(dto.dataEntrada(), dto.dataSaida());
 
         Cliente cliente = clienteService.buscarPorId(dto.clienteId());
@@ -74,7 +76,15 @@ public class AluguelService {
         aluguel.setStatus(calcularStatusInicial(dto.dataEntrada()));
         aluguel.setRecibo(gerarRecibo(cliente, quarto, diarias, valorFinal));
 
-        return toResponse(repository.save(aluguel));
+        Aluguel salvo = repository.save(aluguel);
+
+        logger.log("ALUGUEL_CRIADO",
+            "Cliente: " + cliente.getNome() +
+            " | Quarto ID: " + quarto.getId() +
+            " | Diárias: " + diarias +
+            " | Valor: R$ " + valorFinal);
+
+        return toResponse(salvo);
     }
 
     public AluguelResponseDTO finalizar(Long aluguelId) {
@@ -82,7 +92,14 @@ public class AluguelService {
             .orElseThrow(() -> new ResourceNotFoundException("Aluguel não encontrado: " + aluguelId));
 
         aluguel.setStatus(AluguelStatus.FINALIZADO);
-        return toResponse(repository.save(aluguel));
+        Aluguel salvo = repository.save(aluguel);
+
+        logger.log("ALUGUEL_FINALIZADO",
+            "Aluguel ID: " + aluguelId +
+            " | Cliente: " + aluguel.getCliente().getNome() +
+            " | Quarto ID: " + aluguel.getQuarto().getId());
+
+        return toResponse(salvo);
     }
 
     private void validarDatas(LocalDateTime dataEntrada, LocalDateTime dataSaida) {
@@ -156,6 +173,4 @@ public class AluguelService {
             aluguel.getQuarto().getClass().getSimpleName()
         );
     }
-
 }
-
