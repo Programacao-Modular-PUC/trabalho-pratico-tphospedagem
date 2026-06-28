@@ -11,17 +11,17 @@ import Container from './components/layout/Container.jsx'
 import Navbar from './components/layout/Navbar.jsx'
 import Footer from './components/layout/Footer.jsx'
 function App() {
-  
+
 
   return (
     <div className="app-shell">
     <Router>
-      
+
       <Navbar />
-    
+
     <Container customClass="min_height">
       <Routes>
-      
+
         <Route path="/" element={<Home/>} />
         <Route path="/residencias" element={<Residencias />} />
         <Route path="/quartos" element={<Quartos />} />
@@ -35,7 +35,7 @@ function App() {
 
   </Container>
 
-  
+
   <Footer />
     </Router>
     </div>

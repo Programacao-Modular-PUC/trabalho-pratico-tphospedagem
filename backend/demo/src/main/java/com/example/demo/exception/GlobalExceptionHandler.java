@@ -73,21 +73,55 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(error);
     }
 
-    @ExceptionHandler(QuartoIndisponivelException.class)
-    public ResponseEntity<ApiErrorResponse> handleQuartoIndisponivel(
-        QuartoIndisponivelException ex,
+    @ExceptionHandler(DataInvalidaException.class)
+    public ResponseEntity<ApiErrorResponse> handleDataInvalida(
+        DataInvalidaException ex,
         HttpServletRequest request
     ) {
-        logger.log("ERRO_QUARTO_INDISPONIVEL", ex.getMessage() + " | URI: " + request.getRequestURI());
+        logger.log("ERRO_DATA_INVALIDA", ex.getMessage() + " | URI: " + request.getRequestURI());
 
         ApiErrorResponse error = new ApiErrorResponse(
             LocalDateTime.now(),
-            HttpStatus.CONFLICT.value(),
-            "Quarto Indisponível",
+            HttpStatus.BAD_REQUEST.value(),
+            "Invalid Date",
             ex.getMessage(),
             request.getRequestURI()
         );
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(CapacidadeExcedidaException.class)
+    public ResponseEntity<ApiErrorResponse> handleCapacidadeExcedida(
+        CapacidadeExcedidaException ex,
+        HttpServletRequest request
+    ) {
+        logger.log("ERRO_CAPACIDADE_EXCEDIDA", ex.getMessage() + " | URI: " + request.getRequestURI());
+
+        ApiErrorResponse error = new ApiErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Capacity Exceeded",
+            ex.getMessage(),
+            request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
+    @ExceptionHandler(RecursoNaoPermitidoException.class)
+    public ResponseEntity<ApiErrorResponse> handleRecursoNaoPermitido(
+        RecursoNaoPermitidoException ex,
+        HttpServletRequest request
+    ) {
+        logger.log("ERRO_RECURSO_NAO_PERMITIDO", ex.getMessage() + " | URI: " + request.getRequestURI());
+
+        ApiErrorResponse error = new ApiErrorResponse(
+            LocalDateTime.now(),
+            HttpStatus.BAD_REQUEST.value(),
+            "Resource Not Allowed",
+            ex.getMessage(),
+            request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(Exception.class)

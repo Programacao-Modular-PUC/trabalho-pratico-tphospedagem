@@ -7,6 +7,7 @@ import com.example.demo.model.*;
 import com.example.demo.model.enums.AluguelStatus;
 import com.example.demo.repository.*;
 
+
 @Component
 public class DataInitializer implements CommandLineRunner {
 
