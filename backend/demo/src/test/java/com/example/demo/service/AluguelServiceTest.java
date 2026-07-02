@@ -18,6 +18,7 @@ import com.example.demo.dto.AluguelRequestDTO;
 import com.example.demo.exception.CapacidadeExcedidaException;
 import com.example.demo.model.Cliente;
 import com.example.demo.model.QuartoIndividual;
+import com.example.demo.notificacao.NotificacaoService;
 import com.example.demo.repository.AluguelRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,10 +33,13 @@ class AluguelServiceTest {
     @Mock
     private QuartoService quartoService;
 
+    @Mock
+    private NotificacaoService notificacaoService;
+
     @Test
     void deveLancarCapacidadeExcedidaExceptionQuandoQuantidadeHospedesUltrapassaLimite() {
         Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
-        AluguelService service = new AluguelService(repository, clienteService, quartoService, clock);
+        AluguelService service = new AluguelService(repository, clienteService, quartoService, clock, notificacaoService);
 
         Cliente cliente = new Cliente();
         cliente.setId(1L);

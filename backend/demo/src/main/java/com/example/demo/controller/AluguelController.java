@@ -49,6 +49,11 @@ public class AluguelController {
     public AluguelResponseDTO finalizarAluguel(@PathVariable Long id) {
         return service.finalizar(id);
     }
+
+    @PutMapping("/{id}/cancelar")
+    public AluguelResponseDTO cancelarAluguel(@PathVariable Long id) {
+        return service.cancelar(id);
+    }
     
     
 }
