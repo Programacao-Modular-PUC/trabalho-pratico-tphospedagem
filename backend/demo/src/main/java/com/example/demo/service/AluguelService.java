@@ -21,6 +21,7 @@ import com.example.demo.model.Aluguel;
 import com.example.demo.model.Cliente;
 import com.example.demo.model.Quarto;
 import com.example.demo.model.enums.AluguelStatus;
+import com.example.demo.notificacao.NotificacaoService;
 import com.example.demo.repository.AluguelRepository;
 import com.example.demo.exception.QuartoIndisponivelException;
 
@@ -33,18 +34,21 @@ public class AluguelService {
     private final ClienteService clienteService;
     private final QuartoService quartoService;
     private final Clock clock;
+    private final NotificacaoService notificacaoService;
     private final SystemLogger logger = SystemLogger.getInstance();
 
     public AluguelService(
         AluguelRepository repository,
         ClienteService clienteService,
         QuartoService quartoService,
-        Clock clock
+        Clock clock,
+        NotificacaoService notificacaoService
     ) {
         this.repository = repository;
         this.clienteService = clienteService;
         this.quartoService = quartoService;
         this.clock = clock;
+        this.notificacaoService = notificacaoService;
     }
 
     public List<AluguelResponseDTO> listar() {
@@ -86,6 +90,10 @@ public class AluguelService {
             " | Diárias: " + diarias +
             " | Valor: R$ " + valorFinal);
 
+        notificacaoService.notificar(cliente, "RESERVA_CRIADA",
+            "Olá " + cliente.getNome() + ", sua reserva foi confirmada! Entrada: " + dto.dataEntrada() +
+            " | Diárias: " + diarias + " | Valor: R$ " + valorFinal);
+
         return toResponse(salvo);
     }
 
@@ -100,6 +108,31 @@ public class AluguelService {
             "Aluguel ID: " + aluguelId +
             " | Cliente: " + aluguel.getCliente().getNome() +
             " | Quarto ID: " + aluguel.getQuarto().getId());
+
+        notificacaoService.notificar(aluguel.getCliente(), "CHECKOUT_REALIZADO",
+            "Olá " + aluguel.getCliente().getNome() + ", esperamos que tenha gostado da hospedagem! Até a próxima.");
+
+        return toResponse(salvo);
+    }
+
+    public AluguelResponseDTO cancelar(Long aluguelId) {
+        Aluguel aluguel = repository.findById(aluguelId)
+            .orElseThrow(() -> new ResourceNotFoundException("Aluguel não encontrado: " + aluguelId));
+
+        if (aluguel.getStatus() == AluguelStatus.CANCELADO) {
+            throw new BusinessRuleException("Esse aluguel já está cancelado");
+        }
+
+        aluguel.setStatus(AluguelStatus.CANCELADO);
+        Aluguel salvo = repository.save(aluguel);
+
+        logger.log("ALUGUEL_CANCELADO",
+            "Aluguel ID: " + aluguelId +
+            " | Cliente: " + aluguel.getCliente().getNome() +
+            " | Quarto ID: " + aluguel.getQuarto().getId());
+
+        notificacaoService.notificar(aluguel.getCliente(), "RESERVA_CANCELADA",
+            "Olá " + aluguel.getCliente().getNome() + ", sua reserva foi cancelada.");
 
         return toResponse(salvo);
     }

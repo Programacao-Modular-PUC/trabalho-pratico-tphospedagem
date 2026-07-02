@@ -74,3 +74,45 @@
   border-radius: 6px;
   padding: 8px;
 }
+
+.reserva-status {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.status-ativo {
+  background: #e6f4ea;
+  color: #0c7a38;
+}
+
+.status-cancelado {
+  background: #fdecea;
+  color: #b00020;
+}
+
+.status-finalizado {
+  background: #e8eaf6;
+  color: #3949ab;
+}
+
+.btn-cancelar {
+  margin-top: 12px;
+  padding: 10px;
+  width: 100%;
+  background-color: #b00020;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-cancelar:hover {
+  background-color: #8a0018;
+}
+
+.btn-cancelar:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}

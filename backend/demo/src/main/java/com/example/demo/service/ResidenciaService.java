@@ -39,6 +39,10 @@ public class ResidenciaService {
             .orElseThrow(() -> new ResourceNotFoundException("Residência não encontrada: " + id));
     }
 
+    public ResidenciaResponseDTO buscarPorIdDTO(Long id) {
+        return toResponse(buscarPorId(id));
+    }
+
     private ResidenciaResponseDTO toResponse(Residencia residencia) {
         return new ResidenciaResponseDTO(
             residencia.getId(),
