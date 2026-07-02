@@ -6,6 +6,7 @@ import Cliente from './pages/Cliente.jsx'
 import Reserva from './pages/Reserva.jsx'
 import Login from './pages/Login.jsx'
 import CriarCliente from './pages/CriarCliente.jsx'
+import Pagamento from './pages/Pagamento.jsx'
 
 import Container from './components/layout/Container.jsx'
 import Navbar from './components/layout/Navbar.jsx'
@@ -31,6 +32,7 @@ function App() {
         <Route path="/quartos/:id" element={<Quartos />} />
         <Route path="/login" element={<Login />} />
         <Route path="/criar-cliente" element={<CriarCliente />} />
+        <Route path="/pagamento" element={<Pagamento />} />
     </Routes>
 
   </Container>
