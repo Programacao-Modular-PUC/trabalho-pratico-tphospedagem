@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +40,11 @@ public class AluguelController {
         return service.listar();
     }
 
+    @GetMapping("/{id}")
+    public AluguelResponseDTO buscarPorId(@PathVariable Long id) {
+        return service.buscarPorId(id);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AluguelResponseDTO salvarAluguel(@Valid @RequestBody AluguelRequestDTO a) {
@@ -54,6 +60,11 @@ public class AluguelController {
     public AluguelResponseDTO cancelarAluguel(@PathVariable Long id) {
         return service.cancelar(id);
     }
-    
-    
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void excluirAluguel(@PathVariable Long id) {
+        service.deletar(id);
+    }
+
 }

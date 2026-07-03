@@ -2,22 +2,22 @@
   max-width: 580px;
   margin: 0 auto;
   padding: 48px 24px 64px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .pagamento-titulo {
   text-align: center;
   font-size: 2rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--color-text);
   margin-bottom: 40px;
   letter-spacing: -0.5px;
 }
 
 .pagamento-card {
-  background: #ffffff;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-card);
   padding: 24px;
   margin-bottom: 16px;
   display: flex;
@@ -30,7 +30,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: #555;
+  color: var(--color-text-muted);
   margin: 0 0 4px;
 }
 
@@ -38,16 +38,24 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
-  color: #444;
+  color: var(--color-text);
+}
+
+.pagamento-linha span:first-child {
+  color: var(--color-text-muted);
 }
 
 .pagamento-linha.total {
   font-size: 1rem;
   font-weight: 700;
-  color: #1a1a2e;
-  border-top: 1px solid #e8eaed;
+  color: var(--color-text);
+  border-top: 1px solid var(--color-border);
   padding-top: 10px;
   margin-top: 4px;
+}
+
+.pagamento-linha.total span:first-child {
+  color: var(--color-text);
 }
 
 .pagamento-grid {
@@ -57,47 +65,47 @@
 }
 
 .pagamento-opcao {
-  border: 1px solid #e8eaed;
+  border: 1px solid var(--color-border);
   border-radius: 10px;
   padding: 14px;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 4px;
-  background: #f9fafb;
+  background: var(--color-surface-2);
   transition: border-color 0.15s, background 0.15s;
 }
 
 .pagamento-opcao:hover {
-  border-color: #93c5fd;
-  background: #eff6ff;
+  border-color: var(--color-accent);
+  background: rgba(255, 176, 32, 0.08);
 }
 
 .pagamento-opcao.selected {
-  border: 2px solid #2563eb;
-  background: #eff6ff;
+  border: 2px solid var(--color-accent);
+  background: rgba(255, 176, 32, 0.12);
 }
 
 .pagamento-nome {
   font-size: 0.9rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: var(--color-text);
 }
 
 .pagamento-opcao small {
   font-size: 0.78rem;
-  color: #888;
+  color: var(--color-text-muted);
 }
 
 .pagamento-opcao.selected small {
-  color: #1d4ed8;
+  color: var(--color-accent);
 }
 
 .pagamento-btn {
   width: 100%;
   padding: 13px;
-  background-color: #2563eb;
-  color: white;
+  background-color: var(--color-accent);
+  color: #1a1a1a;
   border: none;
   border-radius: 10px;
   font-size: 1rem;
@@ -106,16 +114,16 @@
   transition: background-color 0.15s, transform 0.1s;
 }
 
-.pagamento-btn:hover {
-  background-color: #1d4ed8;
+.pagamento-btn:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
 }
 
-.pagamento-btn:active {
+.pagamento-btn:active:not(:disabled) {
   transform: scale(0.98);
 }
 
 .pagamento-btn:disabled {
-  background-color: #93c5fd;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
@@ -123,18 +131,18 @@
   font-size: 0.9rem;
   padding: 10px 14px;
   border-radius: 8px;
-  background: #f1f5f9;
-  color: #444;
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
 }
 
 .pagamento-msg.erro {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
 }
 
 .pagamento-msg.sucesso {
-  background: #dcfce7;
-  color: #15803d;
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
 }
 
 @media (max-width: 600px) {

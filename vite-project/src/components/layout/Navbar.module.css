@@ -1,10 +1,32 @@
 .navbar{
     display: flex;
     justify-content: space-between;
-    background-color: #222;
-    padding: 0.3em;
-    
-    
+    align-items: center;
+    background-color: #1e1e22;
+    border-bottom: 1px solid #3a3a42;
+    padding: 0.75em 0;
+    box-shadow: 0 4px 20px -8px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.brand{
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    text-decoration: none;
+}
+
+.brandIcon{
+    flex-shrink: 0;
+}
+
+.brandText{
+    color: #f4f4f5;
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 .list{
@@ -14,15 +36,127 @@
 }
 
 .item{
-    margin-right: 1em;
+    margin-right: 1.5em;
 }
 
 .item a{
-    color: #FFF;
+    color: #f4f4f5;
     text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s ease;
 }
 
 .item a:hover{
-    color: #FFBB33;
-    
+    color: #ffb020;
+}
+
+.userArea{
+    display: flex;
+    align-items: center;
+}
+
+.loginButton{
+    padding: 0.5em 1.2em;
+    border: 1px solid #ffb020;
+    border-radius: 8px;
+    color: #ffb020;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.loginButton:hover{
+    background-color: #ffb020;
+    color: #1a1a1a;
+}
+
+.userMenu{
+    position: relative;
+}
+
+.userButton{
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    background: transparent;
+    border: 1px solid #3a3a42;
+    border-radius: 999px;
+    padding: 0.3em 0.9em 0.3em 0.3em;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+}
+
+.userButton:hover{
+    border-color: #ffb020;
+}
+
+.avatar{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #ffb020;
+    color: #1a1a1a;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+}
+
+.userName{
+    color: #f4f4f5;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.dropdown{
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background-color: #29292f;
+    border: 1px solid #3a3a42;
+    border-radius: 10px;
+    padding: 0.75em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+    min-width: 200px;
+    box-shadow: 0 12px 30px -10px rgba(0, 0, 0, 0.6);
+}
+
+.dropdownEmail{
+    color: #9a9aa2;
+    font-size: 0.8rem;
+    word-break: break-all;
+    padding: 0 0.2em;
+}
+
+.dropdownLink{
+    color: #f4f4f5;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 0.4em 0.2em;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
+}
+
+.dropdownLink:hover{
+    background-color: #34343b;
+}
+
+.logoutButton{
+    background-color: transparent;
+    border: 1px solid #ff6b6b;
+    color: #ff6b6b;
+    border-radius: 8px;
+    padding: 0.5em;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.logoutButton:hover{
+    background-color: #ff6b6b;
+    color: #1a1a1a;
 }

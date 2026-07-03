@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import org.springframework.stereotype.Service;
 import com.example.demo.dto.PagamentoRequestDTO;
 import com.example.demo.dto.PagamentoResponseDTO;
+import com.example.demo.exception.BusinessRuleException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.gerenciador.GerenciadorDePagamento;
 import com.example.demo.logger.SystemLogger;
@@ -30,6 +31,10 @@ public class PagamentoService {
         Aluguel aluguel = aluguelRepository.findById(dto.aluguelId())
             .orElseThrow(() -> new ResourceNotFoundException(
                 "Aluguel não encontrado: " + dto.aluguelId()));
+
+        if (repository.existsByAluguelId(dto.aluguelId())) {
+            throw new BusinessRuleException("Este aluguel já possui um pagamento registrado");
+        }
 
         // Usa o Singleton para obter a estratégia correta
         MeioDePagamento estrategia = GerenciadorDePagamento

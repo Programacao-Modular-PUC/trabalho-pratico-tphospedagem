@@ -23,6 +23,7 @@ import com.example.demo.model.Quarto;
 import com.example.demo.model.enums.AluguelStatus;
 import com.example.demo.notificacao.NotificacaoService;
 import com.example.demo.repository.AluguelRepository;
+import com.example.demo.repository.PagamentoRepository;
 import com.example.demo.exception.QuartoIndisponivelException;
 
 @Service
@@ -35,6 +36,7 @@ public class AluguelService {
     private final QuartoService quartoService;
     private final Clock clock;
     private final NotificacaoService notificacaoService;
+    private final PagamentoRepository pagamentoRepository;
     private final SystemLogger logger = SystemLogger.getInstance();
 
     public AluguelService(
@@ -42,13 +44,15 @@ public class AluguelService {
         ClienteService clienteService,
         QuartoService quartoService,
         Clock clock,
-        NotificacaoService notificacaoService
+        NotificacaoService notificacaoService,
+        PagamentoRepository pagamentoRepository
     ) {
         this.repository = repository;
         this.clienteService = clienteService;
         this.quartoService = quartoService;
         this.clock = clock;
         this.notificacaoService = notificacaoService;
+        this.pagamentoRepository = pagamentoRepository;
     }
 
     public List<AluguelResponseDTO> listar() {
@@ -57,6 +61,12 @@ public class AluguelService {
 
     public List<AluguelResponseDTO> listarHistoricoPorCliente(Long clienteId) {
         return repository.findByClienteId(clienteId).stream().map(this::toResponse).toList();
+    }
+
+    public AluguelResponseDTO buscarPorId(Long id) {
+        Aluguel aluguel = repository.findById(id)
+            .orElseThrow(() -> new ResourceNotFoundException("Aluguel não encontrado: " + id));
+        return toResponse(aluguel);
     }
 
     public AluguelResponseDTO salvar(AluguelRequestDTO dto) {
@@ -137,6 +147,23 @@ public class AluguelService {
         return toResponse(salvo);
     }
 
+    public void deletar(Long aluguelId) {
+        Aluguel aluguel = repository.findById(aluguelId)
+            .orElseThrow(() -> new ResourceNotFoundException("Aluguel não encontrado: " + aluguelId));
+
+        if (aluguel.getStatus() != AluguelStatus.CANCELADO) {
+            throw new BusinessRuleException("Apenas reservas canceladas podem ser excluídas");
+        }
+
+        if (pagamentoRepository.existsByAluguelId(aluguelId)) {
+            throw new BusinessRuleException("Não é possível excluir uma reserva com pagamento registrado");
+        }
+
+        repository.delete(aluguel);
+
+        logger.log("ALUGUEL_EXCLUIDO", "Aluguel ID: " + aluguelId);
+    }
+
     private void validarDatas(LocalDateTime dataEntrada, LocalDateTime dataSaida) {
         if (!dataSaida.isAfter(dataEntrada)) {
             throw new DataInvalidaException("Data de saída deve ser maior que a data de entrada");
@@ -205,7 +232,8 @@ public class AluguelService {
             aluguel.getCliente().getId(),
             aluguel.getCliente().getNome(),
             aluguel.getQuarto().getId(),
-            aluguel.getQuarto().getClass().getSimpleName()
+            aluguel.getQuarto().getClass().getSimpleName(),
+            pagamentoRepository.existsByAluguelId(aluguel.getId())
         );
     }
 }

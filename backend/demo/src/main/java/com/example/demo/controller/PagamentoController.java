@@ -7,7 +7,6 @@ import com.example.demo.service.PagamentoService;
 
 @RestController
 @RequestMapping("/pagamentos")
-@CrossOrigin(origins = "*")
 public class PagamentoController {
 
     private final PagamentoService service;

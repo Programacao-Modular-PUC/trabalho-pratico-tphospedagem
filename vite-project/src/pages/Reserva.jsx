@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext.jsx'
 import './Reserva.css'
 
 const initialForm = {
-  clienteId: '',
   quartoId: '',
   dataEntrada: '',
   dataSaida: '',
@@ -11,9 +11,9 @@ const initialForm = {
 }
 
 function Reserva() {
+  const { cliente } = useAuth()
   const [searchParams] = useSearchParams()
   const [form, setForm] = useState(initialForm)
-  const [clientes, setClientes] = useState([])
   const [quartos, setQuartos] = useState([])
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
@@ -29,24 +29,13 @@ function Reserva() {
         setLoading(true)
         setError('')
 
-        const [clientesRes, quartosRes] = await Promise.all([
-          fetch('/api/clientes'),
-          fetch('/api/quartos'),
-        ])
-
-        if (!clientesRes.ok) {
-          throw new Error('Falha ao carregar clientes')
-        }
+        const quartosRes = await fetch('/api/quartos')
 
         if (!quartosRes.ok) {
           throw new Error('Falha ao carregar quartos')
         }
 
-        const clientesData = await clientesRes.json()
-        const quartosData = await quartosRes.json()
-
-        setClientes(clientesData)
-        setQuartos(quartosData)
+        setQuartos(await quartosRes.json())
       } catch (err) {
         setError(err.message || 'Não foi possível carregar os dados iniciais.')
       } finally {
@@ -91,7 +80,7 @@ function Reserva() {
 
     try {
       const payload = {
-        clienteId: Number(form.clienteId),
+        clienteId: cliente.id,
         quartoId: Number(form.quartoId),
         dataEntrada: form.dataEntrada,
         dataSaida: form.dataSaida,
@@ -148,24 +137,26 @@ function Reserva() {
     }
   }
 
+  if (!cliente) {
+    return (
+      <div className="reserva-container">
+        <h1>Reserva de Hospedagem</h1>
+        <p className="reserva-msg">
+          Você precisa <Link to="/login">entrar</Link> para fazer uma reserva.
+        </p>
+      </div>
+    )
+  }
+
   return (
     <div className="reserva-container">
       <h1>Reserva de Hospedagem</h1>
+      <p className="reserva-msg">Reservando como <strong>{cliente.nome}</strong></p>
 
       <form className="reserva-form" onSubmit={handleSubmit}>
-        {loading ? <p className="reserva-msg">Carregando clientes e quartos...</p> : null}
+        {loading ? <p className="reserva-msg">Carregando quartos...</p> : null}
         {error ? <p className="reserva-msg erro">{error}</p> : null}
         {success ? <p className="reserva-msg sucesso">{success}</p> : null}
-
-        <label>Cliente:</label>
-        <select name="clienteId" value={form.clienteId} onChange={handleChange} required>
-          <option value="">Selecione um cliente</option>
-          {clientes.map((cliente) => (
-            <option key={cliente.id} value={cliente.id}>
-              {cliente.nome} - {cliente.cpf}
-            </option>
-          ))}
-        </select>
 
         <label>Quarto:</label>
         <select name="quartoId" value={form.quartoId} onChange={handleChange} required>

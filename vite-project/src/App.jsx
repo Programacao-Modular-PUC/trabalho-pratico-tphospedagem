@@ -11,10 +11,12 @@ import Pagamento from './pages/Pagamento.jsx'
 import Container from './components/layout/Container.jsx'
 import Navbar from './components/layout/Navbar.jsx'
 import Footer from './components/layout/Footer.jsx'
+import { AuthProvider } from './context/AuthContext.jsx'
 function App() {
 
 
   return (
+    <AuthProvider>
     <div className="app-shell">
     <Router>
 
@@ -41,6 +43,7 @@ function App() {
   <Footer />
     </Router>
     </div>
+    </AuthProvider>
   )
 }
 

@@ -41,6 +41,10 @@ public class Cliente {
     @Email(message = "Email inválido")
     private String email;
 
+    @NotBlank(message = "Senha é obrigatória")
+    @JsonIgnore
+    private String senha;
+
     @OneToMany(mappedBy = "cliente")
     @JsonIgnore
     private List<Aluguel> alugueis = new ArrayList<>();

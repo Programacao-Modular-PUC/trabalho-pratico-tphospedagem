@@ -6,6 +6,7 @@
 
 .reserva-container h1 {
   text-align: center;
+  color: var(--color-text);
 }
 
 .reserva-form {
@@ -17,22 +18,26 @@
 .reserva-form input,
 .reserva-form select {
   padding: 8px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface-2);
+  color: var(--color-text);
 }
 
 .reserva-form button {
   margin-top: 10px;
   padding: 10px;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--color-accent);
+  color: #1a1a1a;
+  font-weight: 600;
   border: none;
-  border-radius: 5px;
+  border-radius: var(--radius-md);
   cursor: pointer;
+  transition: background-color 0.15s ease;
 }
 
-.reserva-form button:hover {
-  background-color: #0056b3;
+.reserva-form button:hover:not(:disabled) {
+  background-color: var(--color-accent-hover);
 }
 
 .reserva-form button:disabled {
@@ -42,37 +47,45 @@
 
 .reserva-msg {
   font-size: 0.9rem;
-  color: #333;
+  color: var(--color-text-muted);
   margin: 0;
 }
 
 .reserva-msg.erro {
-  color: #b00020;
+  color: var(--color-danger);
 }
 
 .reserva-msg.sucesso {
-  color: #0c7a38;
+  color: #4ade80;
 }
 
 .reserva-recibo {
   margin-top: 20px;
-  padding: 12px;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  background: #fff;
+  padding: 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
 }
 
 .reserva-recibo h2 {
   margin-top: 0;
   font-size: 1.1rem;
+  color: var(--color-text);
+}
+
+.reserva-recibo p {
+  color: var(--color-text);
 }
 
 .reserva-recibo pre {
   white-space: pre-wrap;
   word-break: break-word;
-  background: #f8f9fa;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
   border-radius: 6px;
   padding: 8px;
+  color: var(--color-text-muted);
 }
 
 .reserva-status {
@@ -83,33 +96,36 @@
 }
 
 .status-ativo {
-  background: #e6f4ea;
-  color: #0c7a38;
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
 }
 
 .status-cancelado {
-  background: #fdecea;
-  color: #b00020;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
 }
 
 .status-finalizado {
-  background: #e8eaf6;
-  color: #3949ab;
+  background: rgba(255, 176, 32, 0.15);
+  color: var(--color-accent);
 }
 
 .btn-cancelar {
   margin-top: 12px;
   padding: 10px;
   width: 100%;
-  background-color: #b00020;
-  color: white;
-  border: none;
-  border-radius: 5px;
+  background-color: transparent;
+  color: var(--color-danger);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-md);
   cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.15s ease, color 0.15s ease;
 }
 
-.btn-cancelar:hover {
-  background-color: #8a0018;
+.btn-cancelar:hover:not(:disabled) {
+  background-color: var(--color-danger);
+  color: #1a1a1a;
 }
 
 .btn-cancelar:disabled {

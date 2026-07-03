@@ -16,6 +16,7 @@ public record AluguelResponseDTO(
     Long clienteId,
     String clienteNome,
     Long quartoId,
-    String tipoQuarto
+    String tipoQuarto,
+    boolean pago
 ) {
 }
